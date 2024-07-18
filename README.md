@@ -87,5 +87,16 @@ irb(main):011> u.posts.first.content
 
 ### 3. Get started with testing with RSpec
 
-At this point I'm adding RSpec in order to get started with tests already in the beginning. This way, each new feature can simply be implemented with tests, ensuring nothing else is breaking.
+At this point I'm adding RSpec in order to get started with tests already in the beginning. This way, each new feature can simply be implemented with tests, ensuring nothing else is breaking:
+
+1. Add gem to dev/test environments in Gemfile and `bundle install`
+
+2. Run `rails generate rspec:install`
+
+Done. By running `rspec`, tests are now executed. Only that no tests exists.
+
+Let's add some tests for the Post and user models under `spec/models/` by running:
+
+> bin/rails generate rspec:model Customer
+> bin/rails generate rspec:model Post
 

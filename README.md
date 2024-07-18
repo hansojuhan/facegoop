@@ -54,7 +54,7 @@ Set up users with Devise, so user could register the account and log in. This is
 
 Then generate a User (`rails generate devise User`), and migrate db.
 
-### 2. 
+### 2. Post model and associations with User
 
 Generate the posts controller in order to have an index page for viewing posts. Generate post model with text and author only.
 
@@ -84,3 +84,8 @@ irb(main):011> u.posts.first.content
   Post Load (0.3ms)  SELECT "posts".* FROM "posts" WHERE "posts"."author_id" = $1 ORDER BY "posts"."id" ASC LIMIT $2  [["author_id", 1], ["LIMIT", 1]]
 => "Test post"
 ```
+
+### 3. Get started with testing with RSpec
+
+At this point I'm adding RSpec in order to get started with tests already in the beginning. This way, each new feature can simply be implemented with tests, ensuring nothing else is breaking.
+

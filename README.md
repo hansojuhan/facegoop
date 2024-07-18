@@ -4,11 +4,11 @@ Goal: social media site (url: https://www.theodinproject.com/lessons/ruby-on-rai
 
 User should be able to:
 
-- [ ] Sign in to see anything except the sign in page.
+- [x] Sign in to see anything except the sign in page.
 
 - [ ] Send follow requests and accept follow requests from other users.
 
-- [ ] Create posts (including text only).
+- [ ] Create posts (text only initially).
 
 - [ ] Like posts
 
@@ -100,3 +100,10 @@ Let's add some tests for the Post and user models under `spec/models/` by runnin
 > bin/rails generate rspec:model Customer
 > bin/rails generate rspec:model Post
 
+### 4. Sign in to see anything
+
+Add Posts#index as the root and add a before action of authenticate user.
+
+### 5. Create posts (text only initially).
+
+Next step is creating posts - and here it makes sense to immediately add the whole CRUD for posts.

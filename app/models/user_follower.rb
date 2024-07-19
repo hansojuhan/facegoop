@@ -4,4 +4,8 @@ class UserFollower < ApplicationRecord
 
   # Status enum
   enum status: { pending: 0, accepted: 1 }
+
+  # Scopes to easily access follows by status
+  scope :status_pending, -> { where(status: :pending) }
+  scope :status_accepted, -> { where(status: :accepted) }
 end

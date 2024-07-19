@@ -160,10 +160,19 @@ Create migration to add column:
 Add the enum definition to the user_follower.rb model:
 > enum status: { pending: 0, accepted: 1 }
 
-#### 6.2. Pages for users and follow requests
+#### 6.2. Pages for users
 
 Next, create a users index page for displaying all users.
+> bin/rails g controller Users
 
-> bin/rails g 
+Next, there should be a button next to each user:
 
+- 'Follow' - to send a follow request
+
+- 'Following' - if a request has been sent and accepted
+
+For this, there should be a way to check if current user is following this user already.
+> user.followers.include?(current_user)
+
+I added the button as a partial '_follow_button.html.erb'.
 

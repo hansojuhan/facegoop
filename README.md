@@ -6,7 +6,7 @@ User should be able to:
 
 - [x] Sign in to see anything except the sign in page.
 
-- [ ] Send follow requests and accept follow requests from other users.
+- [x] Send follow requests and accept follow requests from other users.
 
 - [x] Create posts (text only initially).
 

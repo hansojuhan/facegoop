@@ -8,7 +8,7 @@ User should be able to:
 
 - [ ] Send follow requests and accept follow requests from other users.
 
-- [ ] Create posts (text only initially).
+- [x] Create posts (text only initially).
 
 - [ ] Like posts
 
@@ -106,4 +106,22 @@ Add Posts#index as the root and add a before action of authenticate user.
 
 ### 5. Create posts (text only initially).
 
-Next step is creating posts - and here it makes sense to immediately add the whole CRUD for posts.
+Next step is creating posts - and here it makes sense to immediately add the whole CRUD for posts. To save time, I generated a scaffold for this.
+
+### 6. Send follow requests and accept follow requests from other users.
+
+Next, it should be possible to send and receive follow requests. A user can follow many users and be followed by many other users. First idea is to create a new table 'userfollowers', so users can follow others through this table. Then, it can be set up that a user has 'followers'.
+
+The request should also have a status of 'pending' or 'accepted':
+
+- 'pending' - the other person has to click 'accept', so that the user would be able to start seeing their posts.
+
+- 'accepted' - follow request accepted, user can see the posts.
+
+- If request is rejected, the record can be deleted.
+
+Then, a users index page needs to be created, displaying all users. There, each person can have a 'follow' button. Clicking creates a UserFollower with status 'pending'. The other person should now have a possibility to click 'accept' to change the status.
+
+#### 6.1. Status enum
+
+Since `status` has only 2 possible values, we can use an enum for this.

@@ -104,11 +104,11 @@ Let's add some tests for the Post and user models under `spec/models/` by runnin
 
 Add Posts#index as the root and add a before action of authenticate user.
 
-### 5. Create posts (text only initially).
+### 5. Create posts (text only initially)
 
 Next step is creating posts - and here it makes sense to immediately add the whole CRUD for posts. To save time, I generated a scaffold for this.
 
-### 6. Send follow requests and accept follow requests from other users.
+### 6. Send follow requests and accept follow requests from other users
 
 Next, it should be possible to send and receive follow requests. A user can follow many users and be followed by many other users. First idea is to create a new table 'userfollowers', so users can follow others through this table. Then, it can be set up that a user has 'followers'.
 
@@ -176,7 +176,7 @@ For this, there should be a way to check if current user is following this user 
 
 The button is added as a partial '_follow_button.html.erb'.
 
-### 6.3. Show statuses for each user
+#### 6.3. Show statuses for each user
 
 Using scopes in UserFollower and method in User, it's possible to easily check if user is following/pending a follow/not yet following.
 
@@ -198,3 +198,17 @@ class User < ApplicationRecord
 end
 ```
 
+#### 6.4. Send and receive follow requests
+
+Last step is sending and accepting follow requests. For this, a new UserFollowersController can be created. This way these can be handled by basic RESTful requests. We only need to create and destroy the follows:
+> bin/rails g controller UserFollowersController create destroy
+
+The methods need to get from the view the user to be followed and current user.
+
+Also some changes are needed for the views:
+
+- Turn to 'follow' button into a form.
+
+- Add an 'Unfollow' button, which destroys the follow.
+
+- Add a separate page/list for pending follow requests.

@@ -11,10 +11,17 @@
     
     <%= button_tag 'Following', type: 'button', disabled: true, class:'mx-2 py-2 px-5 bg-green-200 text-green-600 rounded cursor-default' %>
 
+    <%= form_with url: user_follower_path(user), method: :delete, local: true do |form| %>
+      <%= form.submit 'Unfollow', type: 'submit', disabled: false, class:'mx-2 py-2 px-5 bg-slate-200 hover:bg-slate-100 text-slate-600 rounded' %>
+    <% end %>
+
   <%# If no request sent, button to send request %>
   <% else %>
 
-    <%= button_tag 'Follow', type: 'submit', disabled: false, class:'mx-2 py-2 px-5 bg-slate-200 hover:bg-slate-100 text-slate-600 rounded' %>
+    <%= form_with url: user_followers_path, method: :post, local: true do |form| %>
+      <%= form.hidden_field :followee_id, value: user.id %>
+      <%= form.submit 'Follow', type: 'submit', disabled: false, class:'mx-2 py-2 px-5 bg-slate-200 hover:bg-slate-100 text-slate-600 rounded' %>
+    <% end %>
 
   <% end %>
 

@@ -11,4 +11,5 @@ Rails.application.routes.draw do
   
   resources :posts
   resources :users, only: :index
+  resources :user_followers, only: [ :create, :destroy ]
 end

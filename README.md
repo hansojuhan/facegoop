@@ -174,5 +174,27 @@ Next, there should be a button next to each user:
 For this, there should be a way to check if current user is following this user already.
 > user.followers.include?(current_user)
 
-I added the button as a partial '_follow_button.html.erb'.
+The button is added as a partial '_follow_button.html.erb'.
+
+### 6.3. Show statuses for each user
+
+Using scopes in UserFollower and method in User, it's possible to easily check if user is following/pending a follow/not yet following.
+
+```rb
+class UserFollower < ApplicationRecord
+  # Scopes to easily access follows by status
+  scope :status_pending, -> { where(status: :pending) }
+  scope :status_accepted, -> { where(status: :accepted) }
+end
+
+class User < ApplicationRecord
+  def pending_followees
+    followees.merge(UserFollower.status_pending)
+  end
+
+  def accepted_followees
+    followees.merge(UserFollower.status_accepted)
+  end
+end
+```
 

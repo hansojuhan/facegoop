@@ -19,10 +19,18 @@ class User < ApplicationRecord
   # Takes 'followees', the users whom current user is following,
   # and users the 'pending' scope to filter to only those with a 'pending' status
   def pending_followees
-    followees.merge(UserFollower.pending)
+    followees.merge(UserFollower.status_pending)
   end
 
   def accepted_followees
-    followees.merge(UserFollower.accepted)
+    followees.merge(UserFollower.status_accepted)
+  end
+
+  def pending_followers
+    followers.merge(UserFollower.status_pending)
+  end
+
+  def accepted_followers
+    followers.merge(UserFollower.status_accepted)
   end
 end

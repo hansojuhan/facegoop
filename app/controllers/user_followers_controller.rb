@@ -26,4 +26,19 @@ class UserFollowersController < ApplicationController
       redirect_to users_path, status: :unprocessable_entity
     end
   end
+
+  # accept_user_follower_path
+  def accept
+    follower = User.find(params[:id])
+    
+    follow = UserFollower.find_by(follower: follower, followee: current_user)
+
+    if follow.update(status: :accepted)
+      flash[:success] = "Follow request accepted!"
+      redirect_to users_path
+    else
+      flash[:error] = "Something went wrong"
+      render users_path, status: :unprocessable_entity
+    end
+  end
 end

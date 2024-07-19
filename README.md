@@ -112,6 +112,36 @@ Next step is creating posts - and here it makes sense to immediately add the who
 
 Next, it should be possible to send and receive follow requests. A user can follow many users and be followed by many other users. First idea is to create a new table 'userfollowers', so users can follow others through this table. Then, it can be set up that a user has 'followers'.
 
+NB: [example of implementation of this feature](https://rmiverson.medium.com/allowing-users-to-follow-users-self-join-tables-in-ruby-on-rails-4595d9fb878e)
+
+> bin/rails g model UserFollower follower_id:integer followee_id:integer
+> bin/rails db:migrate
+
+Then, the associations have to be added to the user.rb model that say that:
+
+- User has 'followees' through the followed_users table and the foreign key is 'follower_id'
+
+- User has 'followers' through the followed_users table and the foreign key is 'followee_id'
+
+To test, everything is working, run bin/rails c and type:
+
+```rb
+irb(main):002> u = User.find 1
+=> #<User id: 1 ...
+irb(main):003> u2 = User.find 2
+=> #<User id: 2 ...
+
+irb(main):008> u.followers << u2
+
+# At this point we can easily access the followers and followees:
+irb(main):009> u.followers
+=> [#<User id: 2 ...
+irb(main):010> u2.followees
+=> [#<User id: 1 ...
+```
+
+#### 6.1. Status enum
+
 The request should also have a status of 'pending' or 'accepted':
 
 - 'pending' - the other person has to click 'accept', so that the user would be able to start seeing their posts.
@@ -120,8 +150,12 @@ The request should also have a status of 'pending' or 'accepted':
 
 - If request is rejected, the record can be deleted.
 
+Since `status` has only 2 possible values, we can use an enum for this.
+
 Then, a users index page needs to be created, displaying all users. There, each person can have a 'follow' button. Clicking creates a UserFollower with status 'pending'. The other person should now have a possibility to click 'accept' to change the status.
 
-#### 6.1. Status enum
+Create migration to add column:
+> bin/rails g migration AddStatusToUserFollowers status:integer
 
-Since `status` has only 2 possible values, we can use an enum for this.
+Add the enum definition to the user_follower.rb model:
+> enum status: { pending: 0, accepted: 1 }

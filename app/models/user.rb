@@ -6,4 +6,12 @@ class User < ApplicationRecord
 
   # Has many posts as the 'author'
   has_many :posts, foreign_key: 'author_id'
+
+  # Connect user with users they are following
+  has_many :followed_users, foreign_key: 'follower_id', class_name: 'UserFollower'
+  has_many :followees, through: :followed_users, source: :followee, dependent: :destroy
+
+  # Connect user with those that are following them
+  has_many :following_users, foreign_key: 'followee_id', class_name: 'UserFollower'
+  has_many :followers, through: :following_users, source: :follower, dependent: :destroy
 end

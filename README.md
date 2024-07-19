@@ -159,3 +159,11 @@ Create migration to add column:
 
 Add the enum definition to the user_follower.rb model:
 > enum status: { pending: 0, accepted: 1 }
+
+#### 6.2. Pages for users and follow requests
+
+Next, create a users index page for displaying all users.
+
+> bin/rails g 
+
+

@@ -10,7 +10,7 @@ User should be able to:
 
 - [x] Create posts (text only initially).
 
-- [ ] Like posts
+- [x] Like posts
 
 - [ ] Comment on posts
 

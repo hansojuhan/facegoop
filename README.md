@@ -263,3 +263,29 @@ A strange thing that happened while testing was this:
 3. Continue liking all posts.
 
 At this point I realized that the list of all posts keeps reordering itself after liking is done - even though it doesn't seem like it should. Posts are queried as `@posts = Post.all`.
+
+#### Update button with Turbo
+
+Last step is updating the button right after it was clicked. To do this 2 things are necessary:
+
+1. Target on the page. To do this, we can wrap the button in a div tag with a unique dom_id. This can then be targeted by the turbo stream.
+
+```erb
+<%# This will generate a string like this: likes_post_1 %>
+<%= tag.div id: dom_id(post, :likes) do %>
+<% end %>
+```
+
+2. Turbo stream response in the controller.
+
+```rb
+def update
+  ...
+
+  respond_to do |format|
+    format.turbo_stream {
+      render turbo_stream: turbo_stream.replace(dom_id(@post, :likes), partial: 'posts/likes', locals: { post: @post })
+    }
+  end
+end
+```

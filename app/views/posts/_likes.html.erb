@@ -1,2 +1,8 @@
-<%= button_to "Like", post_like_path(post), method: :patch %>
-<%= post.likes_count %>
+<%# This will generate a string like this: likes_post_1 %>
+<%# This gives us a target to be used by turbo stream %>
+<%= tag.div id: dom_id(post, :likes) do %>
+
+  <%= button_to like_button_text(post), post_like_path(post), method: :patch %>
+  <%= post.likes_count %>
+
+<% end %>

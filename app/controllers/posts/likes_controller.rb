@@ -1,4 +1,8 @@
 class Posts::LikesController < ApplicationController
+  # This is to use dom_id in the turbo_stream
+  # Other option is directy calling ActionView::RecordIdentifier.dom_id
+  include ActionView::RecordIdentifier
+
   before_action :authenticate_user!
   before_action :set_post
 
@@ -8,6 +12,12 @@ class Posts::LikesController < ApplicationController
       @post.unlike(current_user)
     else
       @post.like(current_user)
+    end
+
+    respond_to do |format|
+      format.turbo_stream {
+        render turbo_stream: turbo_stream.replace(dom_id(@post, :likes), partial: 'posts/likes', locals: { post: @post })
+      }
     end
   end
 

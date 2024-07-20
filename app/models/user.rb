@@ -15,6 +15,9 @@ class User < ApplicationRecord
   has_many :following_users, foreign_key: 'followee_id', class_name: 'UserFollower'
   has_many :followers, through: :following_users, source: :follower, dependent: :destroy
 
+  # Likes
+  has_many :likes
+
   # Methods to help get follows by status
   # Takes 'followees', the users whom current user is following,
   # and users the 'pending' scope to filter to only those with a 'pending' status

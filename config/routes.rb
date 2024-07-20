@@ -9,7 +9,12 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "posts#index"
   
-  resources :posts
+  resources :posts do
+    # Singular resource, because each user only has one 'like'
+    resource :like, module: :posts
+  end
+
+
   resources :users, only: :index
   resources :user_followers, only: [ :create, :destroy ] do
     member do

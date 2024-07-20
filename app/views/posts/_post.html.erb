@@ -1,6 +1,9 @@
-<div id="<%= dom_id post %>">
+<div id="<%= dom_id post %>" class="bg-gray-100 rounded mt-4">
   <h2>Content:</h2>
   <p><%= post.content %></p>
   <br>
   <p>Author: <%= post.author.email %></p>
+
+  <%= render partial: 'likes', locals: { post: post } %>
 </div>
+

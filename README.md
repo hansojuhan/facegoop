@@ -48,6 +48,8 @@ First goal is releasing v0.1.0 of the app, which should include the first 3 requ
 
 3. Create posts (including text only).
 
+## v0.1.0
+
 ### 1. Users with Devise
 
 Set up users with Devise, so user could register the account and log in. This is straight forward with devise by 1) adding the gem to Gemfile, 2) running `bundle install` and 3) running the generator `rails generate devise:install` (down the line will also run rails g devise:views in order to be able to style the devise views).
@@ -212,3 +214,52 @@ Also some changes are needed for the views:
 - Add an 'Unfollow' button, which destroys the follow.
 
 - Add a separate page/list for pending follow requests.
+
+## v0.2.0
+
+### Like posts
+
+Generate model for Likes. In order to eventually apply likes to any model, make it polymorphic:
+> rails g model Like user:belongs_to record:belongs_to{polymorphic}
+
+Additionally, let's add a likes counter to the post table. By default this is 0.
+> rails g migration AddLikesCountToPosts likes_count:integer
+
+Next step is adding associations.
+
+- Like 'belongs to' record with polymorphic true. By setting `counter_cache: true` the likes_count will be updated automatically in the post table.
+
+- Post 'has many' likes as 'record'
+
+- User 'has many' likes
+
+Each user should have only one like on a post. They can like or unlike the post. For this, we can create a nested controller under posts, so it would have the post id immediately available.
+
+In routes, add like as a singular resource nested in posts.
+
+```rb
+# /controllers/posts/likes_controller.rb
+class Posts::LikesController < ApplicationController
+end
+
+# routes
+resources :posts do
+  resource :like, module: :posts
+end
+```
+
+Since liking is basically a state toggle, add just an update method into the controller, which 1) checks if like exists and if not 2) adds a like record (if yes, removes the like record.)
+
+This is accomplished by adding methods into post.rb. #like finds first or creates a record. #unlike destroys all records. This way, duplicates are already taken care of.
+
+Then, a like button partial can be added to the post view that displays like/unlike button based on state and a counter.
+
+A strange thing that happened while testing was this:
+
+1. Click 'like' on a post with counter 0 on the post index page
+
+2. Refresh the page, the post disappears. Check console and `likes_count` indeed was changed to 1.
+
+3. Continue liking all posts.
+
+At this point I realized that the list of all posts keeps reordering itself after liking is done - even though it doesn't seem like it should. Posts are queried as `@posts = Post.all`.

@@ -368,3 +368,37 @@ Checking server logs again, now there are only 2 queries, one for post's comment
 14:02:16 web.1  |   User Load (0.8ms)  SELECT "users".* FROM "users" WHERE "users"."id" IN ($1, $2, $3, $4)  [["id", 2], ["id", 4], ["id", 1], ["id", 3]]
 14:02:16 web.1  |   ↳ app/views/posts/show.html.erb:23
 ```
+
+## v0.4.0
+
+### Post should display the post content, author, comments, likes.
+
+This one is almost all done already.
+
+- Content is displayed.
+
+- Author's email is displayed.
+
+- Comments section is present.
+
+- Like counter is there.
+
+As an improvement, the following can be done:
+
+- Make the 'Like' button look like a button.
+
+- Display all users who have liked a post.
+
+As a result, post page now has a separate section "Liked by", a separate like counter and a button. This required some changes to how turbo stream updates the page, because suddenly it had to update 3 separate places.
+
+As a solution, created separate partials for each of them and modified the controller to update each:
+
+```rb
+format.turbo_stream {
+  render turbo_stream: [
+    turbo_stream.replace(dom_id(@post, :likes), partial: 'posts/likes', locals: { post: @post }),
+    turbo_stream.replace(dom_id(@post), partial: 'posts/likes_count', locals: { post: @post }),
+    turbo_stream.replace(dom_id(@post, :liked_by), partial: 'posts/liked_by', locals: { post: @post })
+  ]
+}
+```

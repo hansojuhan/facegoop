@@ -15,8 +15,15 @@ class Posts::LikesController < ApplicationController
     end
 
     respond_to do |format|
+      # format.turbo_stream {
+      #   render turbo_stream: turbo_stream.replace(dom_id(@post, :likes), partial: 'posts/likes', locals: { post: @post })
+      # }
       format.turbo_stream {
-        render turbo_stream: turbo_stream.replace(dom_id(@post, :likes), partial: 'posts/likes', locals: { post: @post })
+        render turbo_stream: [
+          turbo_stream.replace(dom_id(@post, :like_button), partial: 'posts/likes', locals: { post: @post }),
+          turbo_stream.replace(dom_id(@post, :liked_by), partial: 'posts/liked_by', locals: { post: @post }),
+          turbo_stream.replace(dom_id(@post, :likes_count), partial: 'posts/likes_count', locals: { post: @post })
+        ]
       }
     end
   end

@@ -12,7 +12,7 @@ User should be able to:
 
 - [x] Like posts
 
-- [ ] Comment on posts
+- [x] Comment on posts
 
 ## Other requirements
 

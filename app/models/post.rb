@@ -2,7 +2,9 @@ class Post < ApplicationRecord
   belongs_to :author, class_name: 'User', foreign_key: 'author_id'
 
   # Likes
-  has_many :likes, as: :record
+  has_many :likes, as: :record, dependent: :destroy
+  # Add this so that it would be possible to query all users who have liked a post
+  has_many :liked_users, through: :likes, source: :user
 
   # Comments
   has_many :comments

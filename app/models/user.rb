@@ -16,7 +16,7 @@ class User < ApplicationRecord
   has_many :followers, through: :following_users, source: :follower, dependent: :destroy
 
   # Likes
-  has_many :likes
+  has_many :likes, dependent: :destroy
 
   # Has many comments as the 'author'
   has_many :comments, foreign_key: 'author_id'

@@ -6,12 +6,29 @@
 
     <%= render @post %>
 
+    <%= render partial: 'likes', locals: { post: @post } %>
+
     <%= link_to "Edit this post", edit_post_path(@post), class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
     <%= link_to "Back to posts", posts_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
     <div class="inline-block ml-2">
       <%= button_to "Destroy this post", @post, method: :delete, class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 font-medium" %>
     </div>
   </div>
+
+  <%# Likes section %>
+  <%
+=begin%>
+ <% if @post.liked_users.any? %>
+    <div>
+      <h2>Liked by</h2>
+      <% @post.liked_users.each do |user| %>
+        <%= user.email %>
+      <% end %>
+    </div>
+  <% end %> 
+<%
+=end%>
+  <%= render 'liked_by', post: @post %>
 
   <%# Comments section %>
   <div>
@@ -20,6 +37,7 @@
     <%= render 'comments/form', comment: @comment, post: @post %>
 
     <%# Render all comments %>
+    <h3>All comments</h3>
     <%= render @post.comments.includes(:author).order(created_at: :desc) %>
   </div>
 </div>

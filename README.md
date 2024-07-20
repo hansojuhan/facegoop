@@ -16,7 +16,7 @@ User should be able to:
 
 ## Other requirements
 
-- [ ] Post should display the post content, author, comments, likes.
+- [x] Post should display the post content, author, comments, likes.
 
 - [ ] There should be an index page for posts, showing all posts from current user and users they are following.
 
@@ -371,6 +371,16 @@ Checking server logs again, now there are only 2 queries, one for post's comment
 
 ## v0.4.0
 
+This version will include the following functionality:
+
+1. There should be an index page for posts, showing all posts from current user and users they are following.
+
+2. User can create a profile with a profile picture (fetch profile from OmniAuth or Gravatar). Profile contains profile information, photo, posts.
+
+3. Index page for users, showing all users and buttons to send follow requests (if not already following or have a pending request).
+
+4. Welcome mail is sent to a new signed up user.
+
 ### Post should display the post content, author, comments, likes.
 
 This one is almost all done already.
@@ -402,3 +412,25 @@ format.turbo_stream {
   ]
 }
 ```
+
+### There should be an index page for posts, showing all posts from current user and users they are following.
+
+Index page for posts already exists (the root page), but currently it shows all posts from everybody. So, a change is needed so that it would show posts from 1) user itself and 2) users they are following.
+
+Technically, this would be:
+
+1. Posts by current user
+
+2. Posts by current user's followees with status accepted
+
+This can be achieved by creating a class method in Post, which gets all user IDs of current user's accepted followees, adds in their own and then queries all posts with those author ids:
+
+```rb
+  def self.feed_posts(user)
+    ids = user.accepted_followees.pluck(:id)
+    ids << user.id
+    Post.where(author_id: ids)
+  end
+```
+
+Also, the post index page can be renamed to "Feed".

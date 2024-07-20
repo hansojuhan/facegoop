@@ -22,4 +22,12 @@ class Post < ApplicationRecord
   def unlike(user)
     likes.where(user:user).destroy_all
   end
+
+  # Fetch posts for users feed
+  # Includes own posts + accepted followees posts
+  def self.feed_posts(user)
+    ids = user.accepted_followees.pluck(:id)
+    ids << user.id
+    Post.where(author_id: ids)
+  end
 end

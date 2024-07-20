@@ -22,7 +22,7 @@ User should be able to:
 
 - [ ] User can create a profile with a profile picture (fetch profile from OmniAuth or Gravatar). Profile contains profile information, photo, posts.
 
-- [ ] Index page for users, showing all users and buttons to send follow requests (if not already following or have a pending request).
+- [x] Index page for users, showing all users and buttons to send follow requests (if not already following or have a pending request).
 
 - [ ] Welcome mail is sent to a new signed up user.
 
@@ -469,4 +469,13 @@ irb(main):002> user.pending_followees
  #<User id: 4, email: "test4@test.com", created_at: "2024-07-19 09:33:04.231189000 +0000", updated_at: "2024-07-19 09:33:04.231189000 +0000">]
 irb(main):003> 
 ```
+
+### User can create a profile with a profile picture (fetch profile from OmniAuth or Gravatar). Profile contains profile information, photo, posts
+
+For this, considering creating a separate class for Profile. This way, the extra stuff like profile picture, description, location, title etc. do not need to be included in user, which mainly holds email and password. Each user has one profile.
+
+Some googling confirmed that this is a good idea and it follows what is called the Single Responsibility Principle (meaning one class does one thing).
+
+In order to make sure each user will have a profile, an 'after_create' callback can be used.
+
 

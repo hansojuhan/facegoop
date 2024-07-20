@@ -21,6 +21,9 @@ Rails.application.routes.draw do
       get :followers
       get :following
     end
+
+    # Paths for profile (there's only one per user)
+    resource :profile, only: [:show, :edit, :update]
   end
 
   resources :user_followers, only: [ :create, :destroy ] do
@@ -29,5 +32,6 @@ Rails.application.routes.draw do
       delete :remove
     end
   end
-  
+
+
 end

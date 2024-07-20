@@ -39,4 +39,16 @@ class User < ApplicationRecord
   def accepted_followers
     followers.merge(UserFollower.status_accepted)
   end
+
+  # Has one profile
+  has_one :profile, dependent: :destroy
+
+  # Make sure profile is created one a user is created
+  after_create :create_profile
+
+  private
+
+  def create_profile
+    Profile.create(user: self)
+  end
 end

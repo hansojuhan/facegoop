@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   resources :posts do
     # Singular resource, because each user only has one 'like'
     resource :like, module: :posts
+
+    resources :comments, only: [ :new, :create ]
   end
 
 

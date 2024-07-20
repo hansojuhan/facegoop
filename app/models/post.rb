@@ -4,6 +4,9 @@ class Post < ApplicationRecord
   # Likes
   has_many :likes, as: :record
 
+  # Comments
+  has_many :comments
+
   def liked_by?(user)
     likes.where(user: user).any?
   end

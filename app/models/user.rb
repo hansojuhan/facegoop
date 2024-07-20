@@ -18,6 +18,9 @@ class User < ApplicationRecord
   # Likes
   has_many :likes
 
+  # Has many comments as the 'author'
+  has_many :comments, foreign_key: 'author_id'
+
   # Methods to help get follows by status
   # Takes 'followees', the users whom current user is following,
   # and users the 'pending' scope to filter to only those with a 'pending' status

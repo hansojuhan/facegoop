@@ -289,3 +289,82 @@ def update
   end
 end
 ```
+
+## v0.3.0
+
+### Comment on posts
+
+Generate Comment model.
+> bin/rails g model Comment content:text author:references post:references
+
+In the migration, change:
+> t.references :author, null: false, foreign_key: true
+> t.references :author, null: false, foreign_key: { to_table: :users }
+
+Add associations:
+Comment:
+> belongs_to :author, class_name: 'User', foreign_key: 'author_id'
+User:
+> has_many :comments, foreign_key: 'author_id'
+Post:
+> has_many :comments
+
+Make sure everything is working by running things in the console like:
+> Post.first.comments.first.author
+> Comment.first.author
+
+Add a partial for comments in views/comments/_comment.html.erb and render it under the post (show.html.erb)
+
+Generate controller for comments:
+> rails g controller Comments
+
+Add a form at the bottom of the comment section as a partial. Add nested resources in posts. Pass the post into render for the :post_id.
+
+Add the Comments#create action to build a new comment in current user's comments. For the params, require comment and permit content. In addition, merge the post_id form the params.
+
+```rb
+  def comment_params
+    params.require(:comment).permit(:content).merge(post_id: params[:post_id])
+  end
+```
+
+Now we have a working way to add comments.
+
+#### Performance issue: N+1 queries fetching comments
+
+When we load a post now with multiple comments under it and check the server logs, we can see that a lot of similar requests are being made:
+```sh
+Comment Load (0.2ms)  SELECT "comments".* FROM "comments" WHERE "comments"."post_id" = $1 ORDER BY "comments"."created_at" DESC  [["post_id", 4]]
+13:57:35 web.1  |   ↳ app/views/posts/show.html.erb:23
+13:57:35 web.1  |   CACHE User Load (0.0ms)  SELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2  [["id", 2], ["LIMIT", 1]]
+13:57:35 web.1  |   ↳ app/views/comments/_comment.html.erb:3
+13:57:35 web.1  |   CACHE User Load (0.0ms)  SELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2  [["id", 2], ["LIMIT", 1]]
+13:57:35 web.1  |   ↳ app/views/comments/_comment.html.erb:3
+13:57:35 web.1  |   CACHE User Load (0.0ms)  SELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2  [["id", 2], ["LIMIT", 1]]
+13:57:35 web.1  |   ↳ app/views/comments/_comment.html.erb:3
+13:57:35 web.1  |   User Load (0.1ms)  SELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2  [["id", 4], ["LIMIT", 1]]
+13:57:35 web.1  |   ↳ app/views/comments/_comment.html.erb:3
+13:57:35 web.1  |   CACHE User Load (0.0ms)  SELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2  [["id", 4], ["LIMIT", 1]]
+13:57:35 web.1  |   ↳ app/views/comments/_comment.html.erb:3
+13:57:35 web.1  |   User Load (0.1ms)  SELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2  [["id", 1], ["LIMIT", 1]]
+13:57:35 web.1  |   ↳ app/views/comments/_comment.html.erb:3
+13:57:35 web.1  |   User Load (0.1ms)  SELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2  [["id", 3], ["LIMIT", 1]]
+13:57:35 web.1  |   ↳ app/views/comments/_comment.html.erb:3
+13:57:35 web.1  |   CACHE User Load (0.0ms)  SELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2  [["id", 1], ["LIMIT", 1]]
+```
+
+What is happening here is that we are fetching all of this post's comments from the db. For each comment, we are also displaying its author's email. Since the comment doesn't know anything about the author's email, it needs to go fetch this from the user table every time. This is called an N+1 query (in addition to the 1 query, N queries are done for each entry).
+
+This will cause issues once there are 100s and 1000s of comments - but Rails has a very simple solution for this called eager loading.
+
+Make the following change:
+> <%= render @post.comments.order(created_at: :desc) %>
+> <%= render @post.comments.includes(:author)order(created_at: :desc) %>
+
+Checking server logs again, now there are only 2 queries, one for post's comments and other to get all needed users as an array:
+```sh
+14:02:16 web.1  |   Comment Load (0.3ms)  SELECT "comments".* FROM "comments" WHERE "comments"."post_id" = $1 ORDER BY "comments"."created_at" DESC  [["post_id", 4]]
+14:02:16 web.1  |   ↳ app/views/posts/show.html.erb:23
+14:02:16 web.1  |   User Load (0.8ms)  SELECT "users".* FROM "users" WHERE "users"."id" IN ($1, $2, $3, $4)  [["id", 2], ["id", 4], ["id", 1], ["id", 3]]
+14:02:16 web.1  |   ↳ app/views/posts/show.html.erb:23
+```

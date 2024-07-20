@@ -1,0 +1,13 @@
+<div class="w-full">
+  <h1 class="font-bold text-4xl">Following</h1>
+
+  <% @following_users.each do |user| %>
+
+    <div class="flex w-full justify-between items-center">
+      <h2 class="flex-grow">User: <%= user.email %></h2>
+      <%= render partial: 'users/follow_button', locals: { user: user } %>
+    </div>
+
+  <% end %>
+
+</div>

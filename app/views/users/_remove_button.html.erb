@@ -1,0 +1,6 @@
+<%# This button removes the follower %>
+<div class="flex items-center w-full">
+  <%= form_with url: remove_user_follower_path(user), method: :delete, local: true do |form| %>
+    <%= form.submit 'Remove', type: 'submit', class:'mx-2 py-2 px-5 bg-slate-200 hover:bg-slate-100 text-slate-600 rounded' %>
+  <% end %>
+</div>

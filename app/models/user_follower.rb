@@ -8,4 +8,7 @@ class UserFollower < ApplicationRecord
   # Scopes to easily access follows by status
   scope :status_pending, -> { where(status: :pending) }
   scope :status_accepted, -> { where(status: :accepted) }
+
+  # Prevent duplicate relationships
+  validates :follower_id, uniqueness: { scope: :followee_id, message: "Relationship already exists" }
 end

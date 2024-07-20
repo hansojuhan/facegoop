@@ -1,0 +1,32 @@
+<div class="w-full">
+  <h1 class="font-bold text-4xl">My followers</h1>
+
+  <% @followers.each do |user| %>
+
+    <div class="flex w-full justify-between items-center">
+      <h2 class="flex-grow">User: <%= user.email %></h2>
+      <%= render partial: 'users/remove_button', locals: { user: user } %>
+    </div>
+
+  <% end %>
+
+  <h2>Pending follow requests</h2>
+  <% if @pending_followers.any? %>
+    <% @pending_followers.each do |pending_user| %>
+      
+      <div class="flex w-full justify-between items-center">
+        <h2 class="flex-grow">User: <%= pending_user.email %></h2>
+
+        <%= form_with url: accept_user_follower_path(pending_user) do |form| %>
+          <%= form.submit "Accept", class:'mx-2 py-2 px-5 bg-green-200 hover:bg-green-100 text-green-600 rounded' %>
+        <% end %>
+        <%= form_with url: user_follower_path(pending_user), method: :delete do |form| %>
+          <%= form.submit "Reject", class:'mx-2 py-2 px-5 bg-red-200 hover:bg-red-100 text-red-600 rounded' %>
+        <% end %>
+      </div>
+  
+    <% end %>
+  <% else %>
+    <p>No pending requests.</p>
+  <% end %>
+</div>

@@ -18,7 +18,7 @@ User should be able to:
 
 - [x] Post should display the post content, author, comments, likes.
 
-- [ ] There should be an index page for posts, showing all posts from current user and users they are following.
+- [x] There should be an index page for posts, showing all posts from current user and users they are following.
 
 - [ ] User can create a profile with a profile picture (fetch profile from OmniAuth or Gravatar). Profile contains profile information, photo, posts.
 
@@ -434,3 +434,39 @@ This can be achieved by creating a class method in Post, which gets all user IDs
 ```
 
 Also, the post index page can be renamed to "Feed".
+
+### Index page for users, showing all users and buttons to send follow requests (if not already following or have a pending request)
+
+Index page for all users exists already. But to make things more simple, let's divide the page into 3 pages:
+
+1. All users
+
+2. Followers (my followers, along with possibility to remove)
+
+3. Following (all users I am following, along with possibility to unfollow)
+
+To get started, create routes for followers and following.
+> followers_users_path  GET /users/followers(.:format)  users#followers
+> following_users_path  GET /users/following(.:format)  users#following
+
+Then, create the controller actions for these, each of which give either accepted followees or -ers (scopes).
+
+At this point I ran into a small issue: I already have a UserFollowers controller with create and destroy, that can create follow requests and unfollow other users. I also would need to remove my followers. Ideally, I would have two controllers for followers and followees?
+At this point I will just add a new method #remove into the existing controller to remove followers and that's it.
+
+Also, looks like duplicate requests can be sent. Fix this with a validation in UserFollower model.
+```sh
+irb(main):002> user.pending_followees
+  User Load (0.4ms)  SELECT "users".* FROM "users" INNER JOIN "user_followers" ON "users"."id" = "user_followers"."followee_id" WHERE "user_followers"."follower_id" = $1 AND "user_followers"."status" = $2 /* loading for pp */ LIMIT $3  [["follower_id", 2], ["status", 0], ["LIMIT", 11]]
+=> 
+[#<User id: 3, email: "test3@test.com", created_at: "2024-07-19 09:27:15.643418000 +0000", updated_at: "2024-07-19 09:27:15.643418000 +0000">,
+ #<User id: 3, email: "test3@test.com", created_at: "2024-07-19 09:27:15.643418000 +0000", updated_at: "2024-07-19 09:27:15.643418000 +0000">,
+ #<User id: 3, email: "test3@test.com", created_at: "2024-07-19 09:27:15.643418000 +0000", updated_at: "2024-07-19 09:27:15.643418000 +0000">,
+ #<User id: 3, email: "test3@test.com", created_at: "2024-07-19 09:27:15.643418000 +0000", updated_at: "2024-07-19 09:27:15.643418000 +0000">,
+ #<User id: 1, email: "test@test.com", created_at: "2024-07-18 08:45:29.351149000 +0000", updated_at: "2024-07-18 08:45:29.351149000 +0000">,
+ #<User id: 1, email: "test@test.com", created_at: "2024-07-18 08:45:29.351149000 +0000", updated_at: "2024-07-18 08:45:29.351149000 +0000">,
+ #<User id: 3, email: "test3@test.com", created_at: "2024-07-19 09:27:15.643418000 +0000", updated_at: "2024-07-19 09:27:15.643418000 +0000">,
+ #<User id: 4, email: "test4@test.com", created_at: "2024-07-19 09:33:04.231189000 +0000", updated_at: "2024-07-19 09:33:04.231189000 +0000">]
+irb(main):003> 
+```
+

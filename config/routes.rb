@@ -16,11 +16,17 @@ Rails.application.routes.draw do
     resources :comments, only: [ :new, :create ]
   end
 
+  resources :users, only: :index do
+    collection do
+      get :followers
+      get :following
+    end
+  end
 
-  resources :users, only: :index
   resources :user_followers, only: [ :create, :destroy ] do
     member do
       post :accept
+      delete :remove
     end
   end
   

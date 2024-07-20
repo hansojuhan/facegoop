@@ -41,4 +41,19 @@ class UserFollowersController < ApplicationController
       render users_path, status: :unprocessable_entity
     end
   end
+
+  # user_follower_path	DELETE
+  def remove
+    follower = User.find(params[:id])
+    
+    follow = UserFollower.find_by(follower: follower, followee: current_user)
+
+    if follow.destroy
+      flash[:success] = "Follower removed"
+      redirect_to followers_users_path
+    else
+      flash[:error] = "Something went wrong"
+      render followers_users_path, status: :unprocessable_entity
+    end
+  end
 end

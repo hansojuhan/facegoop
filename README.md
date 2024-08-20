@@ -472,10 +472,38 @@ irb(main):003>
 
 ### User can create a profile with a profile picture (fetch profile from OmniAuth or Gravatar). Profile contains profile information, photo, posts
 
-For this, considering creating a separate class for Profile. This way, the extra stuff like profile picture, description, location, title etc. do not need to be included in user, which mainly holds email and password. Each user has one profile.
+#### Profile Model
+
+For this, considering creating a separate model for Profile. This way, the extra stuff like profile picture, description, location, title etc. do not need to be included in user, which mainly holds email and password. Each user has one profile.
 
 Some googling confirmed that this is a good idea and it follows what is called the Single Responsibility Principle (meaning one class does one thing).
 
 In order to make sure each user will have a profile, an 'after_create' callback can be used.
 
+#### Add Omniauth with Devise 
 
+Add Omniauth as authentication, in order to be able to fetch the user profile with profile picture.
+
+Exact steps laid out in [this tutorial](https://medium.com/@paulcmorah/mastering-user-authentication-in-rails-7-with-devise-and-omniauth-06b875a14230)
+
+Recap:
+
+1. Add gems for particular Omniauth strategy (Google for example) and CSRF protection
+
+2. For User model, add :omniauthable and the #from_omniauth method that finds or creates user with information received
+
+3. Add the custom sign in Google button into the Devise view (first generate views with 'rails g devise:views' and enable 'config.scoped_views' in Devise conf)
+
+4. Set up the credentials in Google Cloud.
+
+5. Add into Rails credentials Google client ID and secret, add config into Devise.rb
+
+6. Generate also devise controllers ('rails g devise:controllers users') and add routes for each of the controller (registrations, session, omniauth_callbacks)
+
+7. Add to User string columns of 'provider' and 'uid'
+
+Next steps to be done:
+
+- Profile. Name and avatar url should be saved in the profile.
+
+- Editing profile. Create a page for editing profile.

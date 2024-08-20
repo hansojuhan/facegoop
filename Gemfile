@@ -3,6 +3,8 @@ source "https://rubygems.org"
 ruby "3.3.4"
 
 gem 'devise', '~> 4.9', '>= 4.9.4'
+gem 'omniauth-google-oauth2', '~> 1.1', '>= 1.1.2'
+gem 'omniauth-rails_csrf_protection', '~> 1.0', '>= 1.0.2'
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.1.3", ">= 7.1.3.4"

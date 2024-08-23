@@ -507,3 +507,15 @@ Next steps to be done:
 - Profile. Name and avatar url should be saved in the profile.
 
 - Editing profile. Create a page for editing profile.
+
+#### User profile
+
+User profile will have all the information about the user that's not related to authentication (that's in the user model):
+
+- Full name
+
+- Bio
+
+- Image
+
+- Whatever in the future

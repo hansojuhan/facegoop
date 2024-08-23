@@ -1,4 +1,15 @@
-<div>
-  <h1 class="font-bold text-4xl">Profiles#show</h1>
-  <p>Find me in app/views/profiles/show.html.erb</p>
+<div class="grid grid-cols-[12rem,1fr,8fr] grid-rows-[12rem,3fr] w-full px-16 gap-2">
+
+  <%# Profile %>
+  <div class="col-span-2 row-span-1"><div class="h-full shadow-lg rounded-xl bg-yellow-200">Profile</div></div>
+
+  <%# Name header %>
+  <div class="col-span-1 row-span-1"><div class="h-full shadow-lg rounded-xl bg-red-200">Name</div></div>
+
+  <%# Bio section %>
+  <div class="col-start-1 col-span-2 row-start-2"><div class="h-24 shadow-lg rounded-xl bg-blue-200">Bio</div></div>
+
+  <%# Posts section %>
+  <div class="col-start-3 row-start-2"><div class="h-fit shadow-lg rounded-xl bg-green-200">Posts</div></div>
+
 </div>

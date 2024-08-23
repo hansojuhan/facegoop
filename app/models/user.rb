@@ -7,16 +7,27 @@ class User < ApplicationRecord
   # Make user omniauthable
   devise :omniauthable, omniauth_providers: [:google_oauth2]
 
+  # Has one profile
+  has_one :profile, dependent: :destroy
+
+  # Make sure profile is created one a user is created
+  after_create :create_profile
+
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
       user.email = auth.info.email
       user.password = Devise.friendly_token[0, 20]
-      user.full_name = auth.info.name
-      user.avatar_url = auth.info.image
-
+      
       # If you are using confirmable and the provider(s) you use validate emails, 
       # uncomment the line below to skip the confirmation emails.
       # user.skip_confirmation!
+      
+      user.profile ||= user.build_profile
+      
+      user.profile.full_name = auth.info.name
+      user.profile.avatar_url = auth.info.image
+
+      user
     end
   end
 
@@ -56,15 +67,9 @@ class User < ApplicationRecord
     followers.merge(UserFollower.status_accepted)
   end
 
-  # Has one profile
-  has_one :profile, dependent: :destroy
-
-  # Make sure profile is created one a user is created
-  after_create :create_profile
-
   private
 
   def create_profile
-    Profile.create(user: self)
+    Profile.create(user: self) unless self.profile.present?
   end
 end

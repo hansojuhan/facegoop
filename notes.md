@@ -542,3 +542,16 @@ This version will include:
 
 - [ ] Make your post able to be either a text OR a photo by using a polymorphic association.
 
+## Add images to posts
+
+Images to post should work the same way as profile images to profiles was. Main points:
+
+1. Add `has_one_attached` to post model.
+
+2. Add the preview + file_field to the new post/edit post form.
+
+3. For remove, create a nested post_images controllers with routes for #destroy
+
+4. Update #destroy to respond with a turbo stream to the button click
+
+5. Add post image to post page

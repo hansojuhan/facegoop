@@ -5,9 +5,10 @@ class Post < ApplicationRecord
   has_many :likes, as: :record, dependent: :destroy
   # Add this so that it would be possible to query all users who have liked a post
   has_many :liked_users, through: :likes, source: :user
-
   # Comments
   has_many :comments
+  # Has an attached image
+  has_one_attached :post_image
 
   def liked_by?(user)
     likes.where(user: user).any?

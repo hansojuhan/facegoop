@@ -17,7 +17,11 @@ Rails.application.routes.draw do
     # Singular resource, because each user only has one 'like'
     resource :like, module: :posts
 
+    # For adding new comments
     resources :comments, only: [ :new, :create ]
+
+    # Remove post image
+    resource :post_image, only: :destroy, module: :posts
   end
 
   resources :users, only: :index do

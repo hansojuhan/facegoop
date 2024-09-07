@@ -1,4 +1,6 @@
 <div id="<%= dom_id post %>" class="bg-gray-100 rounded mt-4">
+  <%= image_tag(post.post_image, class:'h-24') if post.post_image.present? %>
+
   <h2>Post <%= post.id %> - <%= post.content %></h2>
 
   <div class="flex justify-start gap-4">

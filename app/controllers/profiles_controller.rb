@@ -24,7 +24,8 @@ class ProfilesController < ApplicationController
 
   private
 
+  # Profile contains full name, bio and a profile image
   def profile_params
-    params.require(:profile).permit(:full_name, :bio)
+    params.require(:profile).permit(:full_name, :bio, :profile_image)
   end
 end

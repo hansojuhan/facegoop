@@ -1,12 +1,17 @@
 <h2>Edit profile</h2>
 
-<%= form_with model: @user.profile, url: user_profile_path(@user) do |form| %>
+<%= form_with model: @user.profile, url: user_profile_path(@user), class:'flex flex-col gap-4' do |form| %>
 
   <%= form.label :full_name, 'Full name' %>
   <%= form.text_field :full_name, placeholder: 'Full name', required: true %>
 
   <%= form.label :bio, 'Bio' %>
   <%= form.text_area :bio, placeholder: 'Describe yourself...', cols: 45, rows: 8, maxlength: 65525, required: false %>
+
+  <%= form.label :profile_image, 'Profile image' %>
+  <%# Image preview %>
+  <%= image_tag(@user.profile.profile_image, class:'w-48 h-48 rounded-full') if @user.profile.profile_image.present?  %>
+  <%= form.file_field :profile_image %>
 
   <%= form.submit 'Save' %>
 

@@ -520,7 +520,25 @@ User profile will have all the information about the user that's not related to 
 
 #### Upload profile image
 
-...
+Use built-in ActiveStorage to upload profile images, in dev and test to local disc and in production to Amazon S3.
+
+To set it up:
+
+1. Add to the model `has_one_attached :profile_image`
+
+2. Add to the edit form a `file_field`. Also add an image preview, if `present?`
+
+3. Permit this in the profile strong parameters
+
+To set up a 'Remove' button:
+
+1. Add a new nested resource under profile for the profile image. Add `module: :profile` to nest route under the model.
+
+2. Create a nested controller `Profile::ImagesController` and add the destroy action. Add before actions for authenticate and set profile
+
+3. In #destroy, call purge_later on the image, redirect to edit path.
+
+4. In the form, add a link to remove (cannot be a button, since it's already in a form) and add `turbo_method: :delete` to turn it into a delete request.
 
 ### Welcome mail is sent to a new signed up user.
 

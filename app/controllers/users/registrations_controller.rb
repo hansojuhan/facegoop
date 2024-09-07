@@ -10,9 +10,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # POST /resource
-  # def create
-  #   super
-  # end
+  def create
+    # This adds the welcome email during user creation
+    super do |resource|
+      UserRegistrationService.call(resource)
+    end
+  end
 
   # GET /resource/edit
   # def edit

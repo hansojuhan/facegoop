@@ -35,3 +35,9 @@ User should be able to:
 - [x] Allow uploading a profile photo.
 
 - [ ] Make your post able to be either a text OR a photo by using a polymorphic association.
+
+## Known bugs / improvement points
+
+- [] With OAuth, it asks for app permissions every time, even if user is already signed up.
+
+- [] With OAuth, it fetches image only during signup, so if it changes/is broken, it won't refetch.

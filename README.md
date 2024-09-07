@@ -30,7 +30,7 @@ User should be able to:
 
 ## Extra requirements
 
-- [ ] Add images to posts.
+- [x] Add images to posts.
 
 - [x] Allow uploading a profile photo.
 

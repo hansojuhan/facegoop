@@ -538,11 +538,11 @@ A welcome mail can be implemented by doing the following:
 
 This version will include:
 
-- [ ] Add images to posts.
+- [x] Add images to posts.
 
 - [ ] Make your post able to be either a text OR a photo by using a polymorphic association.
 
-## Add images to posts
+### Add images to posts
 
 Images to post should work the same way as profile images to profiles was. Main points:
 
@@ -555,3 +555,13 @@ Images to post should work the same way as profile images to profiles was. Main 
 4. Update #destroy to respond with a turbo stream to the button click
 
 5. Add post image to post page
+
+### Make your post able to be either a text OR a photo by using a polymorphic association
+
+Polymorphic association means that one model can belong to one or more other model with a single association. Basically, Post can be different things, such as text, photo, or something else in the future.
+
+To do this, other models need to be created for the content:
+1. TextContent (body:text)
+2. ImageContent (nothing, will add with ActiveStorage)
+
+Then, Post can be associated to these with has many posts as post content. post_content will be added to the posts table with polymorphic: :true.

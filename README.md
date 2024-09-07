@@ -550,6 +550,26 @@ In order to keep all changes in the edit form, if remove image is pushed, add a 
 
 To have `dom_id` in the controller, `include ActionView::RecordIdentifier`
 
+#### Show uploaded profile image
+
+Now, there are 3 options that can be shown as a user's profile image.
+
+1. Default svg file, if there is no image
+
+2. Uploaded image
+
+3. User's Google profile image, if signed in through Google
+
+Logic should be:
+
+1. If Google image exists, show that
+
+2. If Google image exists, but user uploaded their own image, show that instead
+
+3. If none of these exists, show the default svg
+
+To accomplish this, add a helper method.
+
 ### Welcome mail is sent to a new signed up user.
 
 ...

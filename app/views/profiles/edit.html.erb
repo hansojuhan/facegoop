@@ -10,7 +10,14 @@
 
   <%= form.label :profile_image, 'Profile image' %>
   <%# Image preview %>
-  <%= image_tag(@user.profile.profile_image, class:'w-48 h-48 rounded-full') if @user.profile.profile_image.present?  %>
+  <% if @user.profile.profile_image.present? %>
+    <div id="<%= dom_id(@user.profile, :profile_image) %>">
+      <%= image_tag(@user.profile.profile_image, class:'w-48 h-48 rounded-full') %>
+      <%# Remove button %>
+      <%= link_to 'Remove', user_profile_profile_image_path(@user), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?'} %>
+    </div>
+  <% end %>
+
   <%= form.file_field :profile_image %>
 
   <%= form.submit 'Save' %>

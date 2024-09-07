@@ -532,13 +532,23 @@ To set it up:
 
 To set up a 'Remove' button:
 
-1. Add a new nested resource under profile for the profile image. Add `module: :profile` to nest route under the model.
+1. Add a new nested resource under profile for the profile image. Add `module: :profiles` to nest route under the model.
 
-2. Create a nested controller `Profile::ImagesController` and add the destroy action. Add before actions for authenticate and set profile
+2. Create a nested controller `Profiles::ImagesController` and add the destroy action. Add before actions for authenticate and set profile
+
+> NB: module: :profiles and controller name Profiles::ImagesController - profiles in plural.
 
 3. In #destroy, call purge_later on the image, redirect to edit path.
 
 4. In the form, add a link to remove (cannot be a button, since it's already in a form) and add `turbo_method: :delete` to turn it into a delete request.
+
+In order to keep all changes in the edit form, if remove image is pushed, add a turbo_stream response:
+
+1. For the div containing image preview and remove, add a dom id (construct from profile, :profile_image)
+
+2. In the #destroy action, add a turbo stream response to remove that div.
+
+To have `dom_id` in the controller, `include ActionView::RecordIdentifier`
 
 ### Welcome mail is sent to a new signed up user.
 

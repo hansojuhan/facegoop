@@ -27,7 +27,10 @@ Rails.application.routes.draw do
     end
 
     # Paths for profile (there's only one per user)
-    resource :profile, only: [:show, :edit, :update]
+    resource :profile, only: [:show, :edit, :update] do
+      # Nested resource to remove profile image
+      resource :profile_image, only: :destroy, module: :profiles
+    end
   end
 
   resources :user_followers, only: [ :create, :destroy ] do

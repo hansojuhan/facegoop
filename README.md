@@ -517,5 +517,3 @@ User profile will have all the information about the user that's not related to 
 - Bio
 
 - Image
-
-- Whatever in the future

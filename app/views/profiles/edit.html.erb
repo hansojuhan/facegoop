@@ -1,4 +1,15 @@
-<div>
-  <h1 class="font-bold text-4xl">Profiles#edit</h1>
-  <p>Find me in app/views/profiles/edit.html.erb</p>
-</div>
+<h2>Edit profile</h2>
+
+<%= form_with model: @user.profile, url: user_profile_path(@user) do |form| %>
+
+  <%= form.label :full_name, 'Full name' %>
+  <%= form.text_field :full_name, placeholder: 'Full name', required: true %>
+
+  <%= form.label :bio, 'Bio' %>
+  <%= form.text_area :bio, placeholder: 'Describe yourself...', cols: 45, rows: 8, maxlength: 65525, required: false %>
+
+  <%= form.submit 'Save' %>
+
+<% end %>
+
+<%= link_to "Back", :back %>

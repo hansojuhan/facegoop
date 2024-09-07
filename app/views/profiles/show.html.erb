@@ -1,24 +1,53 @@
-<div class="grid grid-cols-[12rem,4rem,8fr] grid-rows-[12rem,3fr] w-full px-16 gap-2">
+<div class="grid grid-cols-[12rem,4rem,8fr] grid-rows-[12rem,3fr] w-full px-16 gap-4">
 
   <%# Profile %>
   <div class="col-start-1 row-start-1 col-span-2">
-    <div class="bg-gray-200 rounded py-4 flex justify-center items-center h-full">
-      <%= image_tag(@user.avatar_url, class: 'h-full rounded-full') unless @user.avatar_url.nil? %>
+    <div class="bg-gray-00 rounded flex justify-center items-center h-full">
+
+      <div class="h-full w-full flex justify-center items-center">
+        <div class="w-48 h-48 rounded-full bg-slate-300 flex items-center justify-center overflow-hidden">
+
+          <% if @user.profile.avatar_url.nil? %>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-3/4 text-slate-500">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"></path>
+            </svg>
+          <% else %>
+            <%= image_tag(@user.profile.avatar_url, class: 'h-full' ) %>
+          <% end %>
+
+        </div>
+      </div>
+
     </div>
   </div>
 
   <%# Name header %>
-  <div class="col-start-3 row-start-1 bg-gray-200 rounded">
-    <div class="pb-4 pl-4 text-4xl h-full flex items-end">
-      <%= @user.full_name %>
+  <div class="col-start-3 row-start-1 bg-gray-00 rounded">
+    <div class="pb-4 px-4 text-4xl h-full flex items-end">
+
+      <div class="flex justify-between w-full">
+        <%= @user.profile.full_name %>
+
+        <% if @user == current_user %>
+        <div class="bg-slate-100 hover:bg-slate-200 text-slate-600 rounded px-5 py-1 text-base flex items-center ">
+          <%= link_to "Edit", edit_user_profile_path(@user) %>
+        </div>
+        <% end %>
+      </div>
+
     </div>
   </div>
 
   <%# Bio section %>
   <div class="col-start-1 col-span-2 row-start-2">
+    <div class="flex flex-col items-start py-4 pl-4 bg-gray-200 rounded">
+      <h2 class="text-2xl">Followers: <%= @user.followers.count %></h2>
+      <h2 class="text-2xl">Following: <%= @user.followees.count %></h2>
+    </div>
+
     <div class="flex flex-col items-start h-full py-4 pl-4 bg-gray-200 rounded">
       <h2 class="text-2xl">Bio</h2>
-      <p>Aasdfasdf</p>
+      <p><%= @user.profile.bio %></p>
     </div>
   </div>
 
@@ -26,6 +55,13 @@
   <div class="col-start-3 row-start-2">
     <div class="flex flex-col items-start h-full ">
       <h2 class="py-4 pl-4 text-2xl bg-gray-200 rounded w-full">Posts</h2>
+
+      <% @user_posts.each do |post| %>
+
+        <div class="w-full"><%= render partial: 'posts/post', locals: { post: post } %></div>
+        
+      <% end %>
+
     </div>
   </div>
 

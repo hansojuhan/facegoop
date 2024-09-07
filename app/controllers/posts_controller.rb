@@ -34,13 +34,13 @@ class PostsController < ApplicationController
   def update
     @post = Post.find(params[:id])
 
-      if @post.update(post_params)
-        flash[:success] = "Object was successfully updated"
-        redirect_to @post
-      else
-        flash[:error] = "Something went wrong"
-        render 'edit', status: :unprocessable_entity
-      end
+    if @post.update(post_params)
+      flash[:success] = "Object was successfully updated"
+      redirect_to @post
+    else
+      flash[:error] = "Something went wrong"
+      render 'edit', status: :unprocessable_entity
+    end
   end
   
   def destroy

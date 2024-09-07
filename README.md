@@ -517,3 +517,11 @@ User profile will have all the information about the user that's not related to 
 - Bio
 
 - Image
+
+#### Upload profile image
+
+...
+
+### Welcome mail is sent to a new signed up user.
+
+...

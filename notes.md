@@ -558,11 +558,14 @@ Images to post should work the same way as profile images to profiles was. Main 
 
 Style overhaul
 
-Index page:
+### Index page
 
-- Important, seeing posts created by other users, so that they can be liked, commented on and people can be followed.
+- Important, seeing posts by other users that I follow, so that they can be liked, commented on.
 
-Find people:
+
+
+
+### Find people:
 
 - Should have a search bar
 

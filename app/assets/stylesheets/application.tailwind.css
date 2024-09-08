@@ -2,12 +2,48 @@
 @tailwind components;
 @tailwind utilities;
 
-/*
-
 @layer components {
+  h1 {
+    @apply text-6xl font-bold mb-8 text-primary;
+  }
+
+  h2 {
+    @apply text-4xl font-bold mb-6 text-primary;
+  }
+
+  h3 {
+    @apply text-2xl font-semibold mb-4 text-primary;
+  }
+
+  h4 {
+    @apply font-semibold mb-4 text-secondary;
+  }
+
+  small {
+    @apply text-tertiary;
+  }
+
   .btn-primary {
-    @apply py-2 px-4 bg-blue-200;
+    @apply bg-accent-green hover:bg-light hover:text-accent-green transition duration-100 ease-in-out py-2 px-10 rounded text-secondary font-bold;
+  }
+
+  .btn-secondary {
+    @apply border border-accent-green hover:text-primary hover:border-primary transition duration-100 ease-in-out py-2 px-10 rounded text-accent-green font-bold;
+  }
+
+  .btn-tertiary {
+    @apply border border-accent-pink hover:text-primary hover:border-primary transition duration-100 ease-in-out py-2 px-10 rounded text-accent-pink font-bold;
+  }
+
+  .link-primary {
+    @apply font-bold underline text-accent-green hover:text-primary transition duration-100 ease-in-out;
+  }
+
+  .link-secondary {
+    @apply font-bold underline text-accent-pink hover:text-primary transition duration-100 ease-in-out;
+  }
+
+  .link-tertiary {
+    @apply font-bold text-tertiary hover:underline transition duration-100 ease-in-out;
   }
 }
-
-*/

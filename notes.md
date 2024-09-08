@@ -540,8 +540,6 @@ This version will include:
 
 - [x] Add images to posts.
 
-- [ ] Make your post able to be either a text OR a photo by using a polymorphic association.
-
 ### Add images to posts
 
 Images to post should work the same way as profile images to profiles was. Main points:
@@ -556,12 +554,34 @@ Images to post should work the same way as profile images to profiles was. Main 
 
 5. Add post image to post page
 
-### Make your post able to be either a text OR a photo by using a polymorphic association
+## v0.6.0
 
-Polymorphic association means that one model can belong to one or more other model with a single association. Basically, Post can be different things, such as text, photo, or something else in the future.
+Style overhaul
 
-To do this, other models need to be created for the content:
-1. TextContent (body:text)
-2. ImageContent (nothing, will add with ActiveStorage)
+Index page:
 
-Then, Post can be associated to these with has many posts as post content. post_content will be added to the posts table with polymorphic: :true.
+- Important, seeing posts created by other users, so that they can be liked, commented on and people can be followed.
+
+Find people:
+
+- Should have a search bar
+
+- As results, shows profiles of people that can be clicked on
+
+My followers:
+
+- Same layout, shows my followers 
+
+Following:
+
+- Same layout, shows following
+
+Post:
+
+- Post title, image, then content (should be rich text)
+
+- Creator: buttons for edit, remove
+
+- Then, row for comment count, like count
+
+- Comment section, add a new comment, see other comments

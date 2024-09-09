@@ -1,10 +1,15 @@
 <div id="<%= dom_id post %>" class="bg-light rounded-xl shadow-xl hover:shadow-2xl transition ease-in duration-100 p-4 mt-4">
 
   <div class="flex flex-row justify-between items-center">
+
     <%# Author and date %>
-    <div class="flex flex-col">
-      <%= link_to post.author.profile.full_name, user_profile_path(post.author), class:'font-bold link-tertiary' %>
-      <small><%= time_ago_in_words(post.created_at) %> ago</small>
+    <div class="flex gap-4">
+      <div class="w-12 h-12 rounded-full overflow-hidden"><%= link_to show_user_profile_image(post.author.profile), user_profile_path(post.author) %></div>
+
+      <div class="flex flex-col">
+        <%= link_to post.author.profile.full_name, user_profile_path(post.author), class:'font-bold link-tertiary' %>
+        <small><%= time_ago_in_words(post.created_at) %> ago</small>
+      </div>
     </div>
 
     <%# Likes and comments  %>
@@ -16,11 +21,9 @@
   </div>
 
   <%# Content %>
-  <div class="my-8">
+  <div class="mt-8 flex gap-8">
+    <%= image_tag(post.post_image, class:'w-1/4 rounded-xl') if post.post_image.present? %>
     <p><%= post.content %></p>
   </div>
 
-  <%# Image %>
-  <%= image_tag(post.post_image, class:'w-full rounded-xl') if post.post_image.present? %>
-  
 </div>

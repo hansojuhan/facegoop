@@ -2,6 +2,8 @@ class PostsController < ApplicationController
   before_action :authenticate_user!
 
   def index
+    @post = Post.new
+
     @posts = Post.feed_posts(current_user).order(created_at: :desc)
   end
 

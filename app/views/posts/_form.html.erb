@@ -1,30 +1,36 @@
-<%= form_with(model: post, class: "contents") do |form| %>
-  <% if post.errors.any? %>
-    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
-      <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
-
-      <ul>
-        <% post.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="inline flex flex-col gap-4">
-    <%= form.text_field :content %>
-
-    <%= form.label :post_image %>
-    <%# Image preview %>
-    <% if post.post_image.present? %>
-      <div id="<%= dom_id(post, :post_image) %>">
-        <%= image_tag(post.post_image, class:'w-48 h-48') %>
-        <%# Remove button %>
-        <%= link_to 'Remove', post_post_image_path(post), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?'} %>
+<div class="bg-light rounded-xl shadow-xl hover:shadow-2xl transition ease-in duration-100 p-4 mt-4">
+  <h3 class="pb-4">What's on your mind?</h3>
+  
+  <%= form_with(model: post) do |form| %>
+    <%# Errors %>
+    <% if post.errors.any? %>
+      <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
+        <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
+        <ul>
+          <% post.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
       </div>
     <% end %>
-    <%= form.file_field :post_image %>
 
-    <%= form.submit class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
-  </div>
-<% end %>
+    <%# Form fields  %>
+    <div class="inline flex flex-col gap-4">
+
+      <%= form.text_field :content, placeholder: 'Write something...', required: true, class: 'rounded border-tertiary' %>
+  
+      <%= form.label :post_image, 'Attach a photo' %>
+      <%# Image preview %>
+      <% if post.post_image.present? %>
+        <div id="<%= dom_id(post, :post_image) %>">
+          <%= image_tag(post.post_image, class:'w-48 h-48') %>
+          <%# Remove button %>
+          <%= link_to 'Remove', post_post_image_path(post), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?'} %>
+        </div>
+      <% end %>
+      <%= form.file_field :post_image %>
+  
+      <%= form.submit "Create new post", class: "btn-primary" %>
+    </div>
+  <% end %>
+</div>

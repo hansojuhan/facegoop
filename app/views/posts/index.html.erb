@@ -4,9 +4,12 @@
 
   <div class="flex justify-between items-center">
     <h1>My Feed</h1>
-    <%= link_to "New post", new_post_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
   </div>
 
+  <%# New post input %>
+  <div>
+    <%= render 'form', post: @post %>
+  </div>
 
   <%# List all posts %>
   <div id="posts">

@@ -4,19 +4,19 @@
 
 @layer components {
   h1 {
-    @apply text-6xl font-bold mb-8 text-primary;
+    @apply text-6xl font-bold my-8 text-primary;
   }
 
   h2 {
-    @apply text-4xl font-bold mb-6 text-primary;
+    @apply text-4xl font-bold my-6 text-primary;
   }
 
   h3 {
-    @apply text-2xl font-semibold mb-4 text-primary;
+    @apply text-2xl font-semibold my-4 text-primary;
   }
 
   h4 {
-    @apply font-semibold mb-4 text-secondary;
+    @apply font-semibold my-4 text-secondary;
   }
 
   small {
@@ -45,5 +45,10 @@
 
   .link-tertiary {
     @apply font-bold text-tertiary hover:underline transition duration-100 ease-in-out;
+  }
+
+  /* Similar container */
+  .main-container {
+    @apply bg-light rounded-xl shadow-xl hover:shadow-2xl transition ease-in duration-100 p-4 mt-4;
   }
 }

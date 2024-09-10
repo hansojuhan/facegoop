@@ -1,43 +1,50 @@
-<div class="mx-auto md:w-2/3 w-full flex flex-col">
-  <div class="mx-auto">
-    <% if notice.present? %>
-      <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
-    <% end %>
+<div class="mx-auto md:w-2/3 mb-24 w-full flex flex-col">
 
-    <%= render @post %>
+  <%= link_to "← Back to posts", posts_path, class: "link-tertiary mb-4" %>
+  
+  <div class="main-container">
 
-    <%= render partial: 'likes', locals: { post: @post } %>
+    <%# Top row with author and like %>
+    <div class="flex flex-row justify-between items-center pt-2 pb-6 mb-8 border-b-2">
+      <%# Author and date %>
+      <div class="flex gap-4">
+        <div class="w-12 h-12 rounded-full overflow-hidden"><%= link_to show_user_profile_image(@post.author.profile), user_profile_path(@post.author) %></div>
+        <div class="flex flex-col">
+          <%= link_to @post.author.profile.full_name, user_profile_path(@post.author), class:'font-bold link-tertiary' %>
+          <small><%= @post.created_at.strftime("%b %e, %Y") %></small>
+        </div>
+      </div>
 
-    <%= link_to "Edit this post", edit_post_path(@post), class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-    <%= link_to "Back to posts", posts_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-    <div class="inline-block ml-2">
-      <%= button_to "Destroy this post", @post, method: :delete, class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 font-medium" %>
+      <%# Right side %>
+      <div class="flex gap-4">
+        <% if @post.author == current_user %>
+          <%= link_to "Edit post", edit_post_path(@post), class: "btn-secondary" %>
+        <% end %>
+        <%= render partial: 'likes', locals: { post: @post } %>
+      </div>
     </div>
+
+    <%# Post content %>
+    <div class="mt-8">
+      <p class="mb-8"><%= @post.content %></p>
+      <%= image_tag(@post.post_image, class:'rounded-xl') if @post.post_image.present? %>
+    </div>
+
   </div>
 
-  <%# Likes section %>
-  <%
-=begin%>
- <% if @post.liked_users.any? %>
-    <div>
-      <h2>Liked by</h2>
-      <% @post.liked_users.each do |user| %>
-        <%= user.email %>
-      <% end %>
+  <%# Liked section %>
+  <% if @post.liked_users.any? %>
+    <div class="main-container">
+      <%= render 'liked_by', post: @post %>
     </div>
-  <% end %> 
-<%
-=end%>
-  <%= render 'liked_by', post: @post %>
-
+  <% end %>
+  
   <%# Comments section %>
-  <div>
-    <h2>Comments</h2>
-    <%# Insert new comment %>
-    <%= render 'comments/form', comment: @comment, post: @post %>
+  <h2>Comments</h2>
 
-    <%# Render all comments %>
-    <h3>All comments</h3>
-    <%= render @post.comments.includes(:author).order(created_at: :desc) %>
+  <div class="main-container">
+    <%= render 'comments/form', comment: @comment, post: @post %>
   </div>
-</div>
+
+  <%# Render all comments %>
+  <%= render @post.comments.includes(:author).order(created_at: :desc) %>

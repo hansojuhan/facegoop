@@ -1,7 +1,16 @@
-<div>
-  
-  <article class="border-b border-solid border-gray-300 mt-4 pb-4 flex flex-col gap-1">
-    <%= comment.content %>
-    <small><%= comment.author.email %></small>
-  </article>
+<div class="mt-8 flex items-start">
+
+  <%# Icon %>
+  <div class="w-12 h-12 rounded-full overflow-hidden"><%= link_to show_user_profile_image(comment.author.profile), user_profile_path(comment.author) %></div>
+
+  <%# Content %>
+  <div class="flex flex-col">
+    <div class="main-container flex flex-col ml-4 mt-0">
+      <p class="font-bold"><%= comment.author.profile.full_name %></p>
+      <p><%= comment.content %></p>
+    </div>
+
+    <small class="ml-8 mt-1"><%= time_ago_in_words(comment.created_at) %> ago</small>
+  </div>
+
 </div>

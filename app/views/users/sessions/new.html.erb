@@ -1,29 +1,58 @@
-<div class="flex flex-col">
-  <h2>Log in</h2>
-  
-  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-    <div class="field">
-      <%= f.label :email %><br />
-      <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+<div class="flex flex-col md:flex-row justify-evenly items-start max-w-screen-xl">
+  <%# Title and logo %>
+  <div class="flex flex-col">
+    <div class="flex items-center gap-4">
+      <%= image_tag('logo_black.svg', class: 'h-16 text-accent-green', style: 'red;') %>
+      <h1>Face<em  class="bg-clip-text text-transparent bg-gradient-to-r from-accent-green to-accent-green-hover">goop</em></h1>
     </div>
+    <p class="text-tertiary italic">Stay Connected, Stay Gooped</p>
+  </div>
   
-    <div class="field">
-      <%= f.label :password %><br />
-      <%= f.password_field :password, autocomplete: "current-password" %>
-    </div>
+  <%# Sign in form %>
+  <div class="flex flex-col main-container w-1/3 max-w-1/3">
+    <h2>Log in</h2>
   
-    <% if devise_mapping.rememberable? %>
-      <div class="field">
-        <%= f.check_box :remember_me %>
-        <%= f.label :remember_me %>
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      <div class="field mb-4">
+        <%= f.label :email %><br />
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class:'w-full' %>
+      </div>
+  
+      <div class="field mb-4">
+        <%= f.label :password %><br />
+        <%= f.password_field :password, autocomplete: "current-password", class:'w-full' %>
+      </div>
+  
+      <% if devise_mapping.rememberable? %>
+        <div class="field mb-4">
+          <%= f.check_box :remember_me %>
+          <%= f.label :remember_me %>
+        </div>
+      <% end %>
+  
+      <div class="flex justify-between">
+        <div class="actions mb-4">
+          <%= f.submit "Log in", class:'btn-primary w-36 h-10' %>
+        </div>
+
+        <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
+          <%= link_to "Sign up", new_registration_path(resource_name), class:'btn-secondary w-36 h-10' %>
+        <% end %>
       </div>
     <% end %>
-  
-    <div class="actions">
-      <%= f.submit "Log in" %>
+
+    <hr class="mb-4">
+    <%# render "users/shared/links" %>
+
+    <%# Google sign in link %>
+    <div class="flex justify-center">
+      <%- resource_class.omniauth_providers.each do |provider| %>
+        <%= form_for "Login", url: omniauth_authorize_path(resource_name, provider), method: :post, data: { turbo: false } do |f| %>
+          <%= f.submit "Login", type: "image", src: url_for("/assets/google_sign_in.png") %>
+        <% end %>
+      <% end %>
     </div>
-  <% end %>
-  
-  <%= render "users/shared/links" %>
+
+    </div>
   </div>
 </div>

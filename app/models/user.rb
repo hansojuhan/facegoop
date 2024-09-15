@@ -22,7 +22,7 @@ class User < ApplicationRecord
       # uncomment the line below to skip the confirmation emails.
       # user.skip_confirmation!
       
-      user.profile ||= user.build_profile
+      user.profile ||= user.create_profile
       
       user.profile.full_name = auth.info.name
       user.profile.avatar_url = auth.info.image

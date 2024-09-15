@@ -24,7 +24,7 @@
   }
 
   .btn-primary {
-    @apply bg-accent-green hover:bg-light hover:text-accent-green transition duration-100 ease-in-out py-2 px-10 rounded text-secondary font-bold;
+    @apply bg-accent-green hover:bg-accent-green-hover transition duration-100 ease-in-out py-2 px-10 rounded text-secondary font-bold;
   }
 
   .btn-secondary {

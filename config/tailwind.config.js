@@ -15,6 +15,7 @@ module.exports = {
         'tertiary': "#3a3a39",
         'light': "#f7f7f7",
         'accent-green': "#2AD589",
+        'accent-green-hover': "#60eaac",
         'accent-pink': "#D52A76",
       },
       fontFamily: {

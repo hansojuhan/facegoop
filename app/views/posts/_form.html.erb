@@ -1,5 +1,7 @@
 <div class="main-container">
   
+  <h3 class="pb-4"><%= title %></h3>
+
   <%= form_with(model: post) do |form| %>
     <%# Errors %>
     <% if post.errors.any? %>

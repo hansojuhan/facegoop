@@ -1,16 +1,11 @@
-<div class="w-full">
-
-  <%# content_for :title, "posts" %>
+<div class="w-full mb-48">
 
   <div class="flex justify-between items-center">
     <h1>My Feed</h1>
   </div>
 
   <%# New post input %>
-  <div>
-    <h3 class="pb-4">What's on your mind?</h3>
-    <%= render 'form', post: @post %>
-  </div>
+  <%= render 'form', post: @post, title: "What's on your mind?" %>
 
   <%# List all posts %>
   <div id="posts">

@@ -12,19 +12,23 @@
   </head>
 
   <body>
+    <%# Navbar %>
     <% if user_signed_in? %>
       <%= render 'shared/nav_logged_in' %>
     <% else %>
       <%= render 'shared/nav_logged_out' %>
     <% end %>
 
-    <% if notice.present? %>
-      <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
-    <% end %>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-    
-    <main class="mx-auto mt-28 px-5 h-auto">
+    <%# Content %>
+    <main class="mx-auto mt-16 px-5 h-aut o max-w-screen-xl">
+
+      <%# Flash %>
+      <% if notice.present? %>
+        <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+      <% elsif alert.present? %>
+        <p class="py-2 px-3 bg-yellow-50 mb-5 text-yellow-500 font-medium rounded-lg inline-block" id="alert"><%= alert %></p>
+      <% end %>
+
       <%= yield %>
     </main>
   </body>

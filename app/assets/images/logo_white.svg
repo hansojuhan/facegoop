@@ -1,0 +1,27 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_1_4)">
+<ellipse cx="41.1562" cy="159.344" rx="11.8882" ry="11.2892" transform="rotate(-45 41.1562 159.344)" fill="white"/>
+<ellipse cx="158.844" cy="41.6562" rx="11.8882" ry="11.2892" transform="rotate(-45 158.844 41.6562)" fill="white"/>
+<line x1="40.2267" y1="159.087" x2="158.587" y2="40.7267" stroke="white" stroke-width="8"/>
+<ellipse cx="16.8889" cy="135.076" rx="11.8882" ry="11.2892" transform="rotate(-45 16.8889 135.076)" fill="white"/>
+<ellipse cx="134.576" cy="17.3889" rx="11.8882" ry="11.2892" transform="rotate(-45 134.576 17.3889)" fill="white"/>
+<line x1="15.9594" y1="134.819" x2="134.319" y2="16.4594" stroke="white" stroke-width="8"/>
+<ellipse cx="65.4236" cy="183.611" rx="11.8882" ry="11.2892" transform="rotate(-45 65.4236 183.611)" fill="white"/>
+<ellipse cx="183.111" cy="65.9236" rx="11.8882" ry="11.2892" transform="rotate(-45 183.111 65.9236)" fill="white"/>
+<line x1="64.494" y1="183.354" x2="182.854" y2="64.994" stroke="white" stroke-width="8"/>
+<ellipse cx="41.1563" cy="41.6563" rx="11.8882" ry="11.2892" transform="rotate(45 41.1563 41.6563)" fill="white"/>
+<ellipse cx="158.844" cy="159.344" rx="11.8882" ry="11.2892" transform="rotate(45 158.844 159.344)" fill="white"/>
+<line x1="41.4133" y1="40.7267" x2="159.773" y2="159.087" stroke="white" stroke-width="8"/>
+<ellipse cx="65.4236" cy="17.3889" rx="11.8882" ry="11.2892" transform="rotate(45 65.4236 17.3889)" fill="white"/>
+<ellipse cx="183.111" cy="135.076" rx="11.8882" ry="11.2892" transform="rotate(45 183.111 135.076)" fill="white"/>
+<line x1="65.6806" y1="16.4594" x2="184.041" y2="134.819" stroke="white" stroke-width="8"/>
+<ellipse cx="16.8889" cy="65.9236" rx="11.8882" ry="11.2892" transform="rotate(45 16.8889 65.9236)" fill="white"/>
+<ellipse cx="134.576" cy="183.611" rx="11.8882" ry="11.2892" transform="rotate(45 134.576 183.611)" fill="white"/>
+<line x1="17.1459" y1="64.9941" x2="135.506" y2="183.354" stroke="white" stroke-width="8"/>
+</g>
+<defs>
+<clipPath id="clip0_1_4">
+<rect width="200" height="200" fill="white"/>
+</clipPath>
+</defs>
+</svg>
